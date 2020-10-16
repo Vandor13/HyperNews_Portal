@@ -5,12 +5,18 @@
     <title>Title</title>
 </head>
 <body>
+    <h2>Hyper news</h2>
     {%if news %}
-        <h2>{{news.title}}</h2>
-        <p>{{news.created}}</p>
-        <p>{{news.text}}</p>
+        {% for day in news %}
+            <h4>{{day.date}}</h4>
+            <ul>
+            {% for article in day.news %}
+                    <li><a href="{{article.href}}">{{article.title}}</a></li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
     {% else %}
-        <h2>Coming soon</h2>
+        <h2>No news</h2>
     {% endif%}
-    <a target="_blank" href="/news/">Main Page</a>
+    <a target="_blank" href="/news/create/">Create Page</a>
 </body>

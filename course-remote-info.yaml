@@ -12,7 +12,7 @@ stages:
   is_completed: true
 - id: 563
   step: 9413
-  is_completed: false
+  is_completed: true
 - id: 564
   step: 9414
   is_completed: false
@@ -71,6 +71,8 @@ topics:
     theory_id: 5900
   - title: Scopes
     theory_id: 6322
+  - title: Arguments
+    theory_id: 7248
   - title: If statement
     theory_id: 5953
   - title: Else statement
@@ -81,8 +83,10 @@ topics:
     theory_id: 6065
   - title: Functional decomposition
     theory_id: 9571
-  - title: Operations with dictionary
+  - title: Dictionary methods
     theory_id: 9008
+  - title: Operations with dictionary
+    theory_id: 11096
   - title: Load module
     theory_id: 6019
   - title: Create module
@@ -179,8 +183,6 @@ topics:
   2:
   - title: Indexes
     theory_id: 6189
-  - title: Arguments
-    theory_id: 7248
   - title: Operations with list
     theory_id: 6031
   - title: Template tags

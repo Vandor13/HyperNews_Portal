@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.views import View
 from django.conf import settings
 import json
-import os
+from itertools import groupby
+import datetime
 
 # Create your views here.
 
@@ -33,5 +34,50 @@ class NewsView(View):
         )
 
 
+class AllNewsView(View):
+    def get(self, request, *args, **kwargs):
+        file_name = settings.NEWS_JSON_PATH
+
+        with open(file_name) as file:
+            news = json.load(file)
+        news.sort( key=get_date, reverse = True)
+        for article in news:
+            article["href"] = get_link(article)
+        iterator = groupby(news, key=get_date)
+        news_by_date = []
+        for date, x in iterator:
+            news_by_date.append({"date": str(date), "news": list(x)})
+        context = {"news": news_by_date}
+        return render(
+            request, 'news/all_news.html', context=context
+        )
+
+
+class CreateNewsView(View):
+    def post(self):
+        pass
+
+
 def home(request):
     return HttpResponse("Coming soon")
+
+
+def get_date(article):
+    datetime_object = datetime.datetime.strptime(article["created"], "%Y-%m-%d %H:%M:%S")
+    return datetime_object.date()
+
+
+def get_link(article):
+    return "/news/" + str(article["link"]) + "/"
+
+
+# with open("news.json") as file:
+#     news = json.load(file)
+# # print(news)
+# news.sort(key=get_date)
+# # print(news)
+# iterator = groupby(news, key=get_date)
+# news_by_date = []
+# for date, x in iterator:
+#     news_by_date.append([str(date), list(x)])
+# # print(news_by_date)
