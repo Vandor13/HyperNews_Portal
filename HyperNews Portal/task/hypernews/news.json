@@ -1,19 +1,32 @@
 [
-  {
-    "created": "2020-02-09 14:15:10",
-    "text": "Text of the news 1",
-    "title": "News 1",
-    "link": 1
-  },
-  {
-    "created": "2020-02-10 14:15:10",
-    "text": "Text of the news 2",
-    "title": "News 2",
-    "link": 2
-  },
-  {"created": "2020-02-09 16:15:10",
-    "text": "Text of the news 3",
-    "title": "News 3",
-    "link": 3
-  }
+    {
+        "created": "2020-02-09 14:15:10",
+        "text": "Text of the news 1",
+        "title": "News 1",
+        "link": 1
+    },
+    {
+        "created": "2020-02-10 14:15:10",
+        "text": "Text of the news 2",
+        "title": "News 2",
+        "link": 2
+    },
+    {
+        "created": "2020-02-09 16:15:10",
+        "text": "Text of the news 3",
+        "title": "News 3",
+        "link": 3
+    },
+    {
+        "created": "2020-10-19 17:49:59",
+        "text": "safddsf",
+        "title": "ABC 1",
+        "link": 603
+    },
+    {
+        "created": "2020-10-19 17:50:07",
+        "text": "fdsfs",
+        "title": "CDE 2",
+        "link": 886
+    }
 ]

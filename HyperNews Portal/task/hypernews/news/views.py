@@ -5,6 +5,9 @@ from django.conf import settings
 import json
 from itertools import groupby
 import datetime
+import random
+from django.shortcuts import redirect
+from django import forms
 
 # Create your views here.
 
@@ -15,7 +18,7 @@ class NewsView(View):
         # file_name = str(os.path.dirname(os.path.abspath(__file__)))+ "\\" + settings.NEWS_JSON_PATH
         file_name = settings.NEWS_JSON_PATH
         # print(file_name)
-        print(news_id)
+        # print(news_id)
         news_article = None
         if news_id:
             with open(file_name) as file:
@@ -38,9 +41,15 @@ class AllNewsView(View):
     def get(self, request, *args, **kwargs):
         file_name = settings.NEWS_JSON_PATH
 
+        search_term = request.GET.get("q")
         with open(file_name) as file:
             news = json.load(file)
-        news.sort( key=get_date, reverse = True)
+
+        # Filter news if searched
+        if search_term:
+            news = [x for x in news if search_term in x["title"]]
+
+        news.sort(key=get_date, reverse=True)
         for article in news:
             article["href"] = get_link(article)
         iterator = groupby(news, key=get_date)
@@ -54,12 +63,32 @@ class AllNewsView(View):
 
 
 class CreateNewsView(View):
-    def post(self):
-        pass
+    def get(self, request, *args, **kwargs):
+        return render(request, 'news/create_news.html')
+
+    def post(self, request, *args, **kwargs):
+        # print(request.POST)
+        title = request.POST.get("title")
+        text = request.POST.get("text")
+        file_name = settings.NEWS_JSON_PATH
+        # print(file_name)
+        # print(news_id)
+        news_id = random.randint(20, 999)
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        context = {"created": now, "text": text, "title": title, "link": news_id}
+        with open(file_name, "r") as file:
+            news = json.load(file)
+            news.append(context)
+        with open(file_name, "w") as file:
+            json.dump(news, file, indent=4)
+        # print(title)
+        # print(text)
+        return redirect("/news/")
 
 
 def home(request):
-    return HttpResponse("Coming soon")
+    return redirect("/news/")
 
 
 def get_date(article):
